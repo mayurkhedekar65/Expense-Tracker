@@ -15,7 +15,7 @@ body {
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
 }
 
-h1, h2, h3, p{
+h1, h2, h3, p {
   margin: 0;
 }
 
@@ -32,7 +32,7 @@ h1 {
 
 .balance p {
   font-size: 24px;
-  color:#3700fd;
+  color: #3700fd;
 }
 
 .income-expense {
@@ -46,7 +46,7 @@ h1 {
   flex: 1;
   padding: 15px;
   text-align: center;
-  background:#b9adff ;
+  background: #b9adff;
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
@@ -95,7 +95,7 @@ h1 {
 
 .btn {
   font-family: 'Poppins', sans-serif;
-  background:#3700fd;
+  background: #3700fd;
   color: white;
   padding: 10px;
   border: none;
@@ -108,7 +108,7 @@ h1 {
 }
 
 .btn:hover {
-  background:#3700fd;
+  background: #3700fd;
 }
 
 .history {
@@ -170,6 +170,37 @@ table button:hover {
   background: #d32f2f;
 }
 
+/* Scrollable transaction history container */
+.transaction-history-container {
+  max-height: 250px; /* Fixed height for scrolling */
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background: white;
+}
+
+/* Keep table header visible while scrolling */
+.transaction-history-container table thead th {
+  position: sticky;
+  top: 0;
+  background: #f0f4f8;
+  z-index: 2;
+}
+
+/* Custom scrollbar styling */
+.transaction-history-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.transaction-history-container::-webkit-scrollbar-thumb {
+  background: #b9adff;
+  border-radius: 4px;
+}
+
+.transaction-history-container::-webkit-scrollbar-track {
+  background: #f0f4f8;
+}
+
 @media (max-width: 768px) {
   .container {
     max-width: 90%;
@@ -195,6 +226,7 @@ table button:hover {
     font-size: 14px;
   }
 }
-h3{
+
+h3 {
   text-align: center;
 }

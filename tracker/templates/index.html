@@ -1,4 +1,5 @@
 {% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,26 +8,60 @@
   <title>Expense Tracker</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{% static 'css/main.css' %}">
+  <style>
+    /* Scroll styling for transaction history */
+    .transaction-history-container {
+      max-height: 300px; /* Limit height */
+      overflow-y: auto;  /* Enable vertical scroll */
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .transaction-history-container table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .transaction-history-container th,
+    .transaction-history-container td {
+      padding: 8px;
+      border-bottom: 1px solid #ddd;
+      text-align: left;
+    }
+
+    .transaction-history-container th {
+      background-color: #f4f4f4;
+      position: sticky;
+      top: 0; /* Keep header fixed while scrolling */
+      z-index: 1;
+    }
+  </style>
 </head>
 <body>
   <div class="container">
     <h1>Expense Tracker</h1>
+
+    <!-- Balance -->
     <div class="balance">
       <h2>Your Balance</h2>
-      <p id="balance">₹0.00</p>
+      <p id="balance">₹{{ current_balance }}</p>
     </div>
+
+    <!-- Income and Expense -->
     <div class="income-expense">
-      <div >
+      <div>
         <h3>Income</h3>
-        <p id="income">₹0.00</p>
+        <p id="income">{{ income }}</p>
       </div>
       <div class="expense">
         <h3>Expenses</h3>
-        <p id="expense">₹0.00</p>
+        <p id="myexpense">{{ myexpense }}</p>
       </div>
     </div>
+
+    <!-- Add Transaction Form -->
     <div class="form">
-      <h3>Transactions</h3>
+      <h3>Add Transaction</h3>
       <form method="POST">
         {% csrf_token %}
         <div class="form-control">
@@ -34,27 +69,49 @@
           <input type="text" name="description" id="text" placeholder="Enter description" required>
         </div>
         <div class="form-control">
-          <label for="amount">Amount <small>(negative - expense, positive - income)</small></label>
+          <label for="amount">Amount <small>(negative = expense, positive = income)</small></label>
           <input type="number" name="amount" id="amount" placeholder="Enter amount" required>
         </div>
         <button class="btn" type="submit">Add Transaction</button>
       </form>
     </div>
+
+    <!-- Transaction History -->
     <div class="history">
       <h3>Transaction History</h3>
-      <table>
-        <thead>
-          <tr>
-            <th>Date</th>
-            <th>Description</th>
-            <th>Amount</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody id="list">
-          <!-- You will loop transactions here using Django later -->
-        </tbody>
-      </table>
+      <div class="transaction-history-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Date & Time</th>
+              <th>Description</th>
+              <th>Amount</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="list">
+            {% for transaction in transactions %}
+            <tr>
+              <td>{{ transaction.created_at }}</td>
+              <td>{{ transaction.description }}</td>
+              <td class="amount {% if transaction.amount < 0 %}expense{% endif %}">
+                {{ transaction.amount }}
+              </td>
+              <td>
+                <form method="POST" action="{% url 'delete_transaction' transaction.id %}">
+                  {% csrf_token %}
+                  <button type="submit">Delete</button>
+                </form>
+              </td>
+            </tr>
+            {% empty %}
+            <tr>
+              <td colspan="4" style="text-align:center;">No transactions yet</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </body>
