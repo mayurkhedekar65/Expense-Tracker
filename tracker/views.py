@@ -55,8 +55,8 @@ def index(request):
 
     
     return render(request, "index.html", context)
-def delete_transaction(request, pk):
-        transaction = get_object_or_404(TrackingHistory, id=pk)
+def delete_transaction(request, id):
+        transaction = get_object_or_404(TrackingHistory, id=id)
         transaction.delete()
         return redirect(index) 
 
