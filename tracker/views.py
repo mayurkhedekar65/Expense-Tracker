@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import CurrentBalance, TrackingHistory
 from django.db.models import Sum
@@ -9,7 +10,10 @@ def index(request):
 
         mydata, _ = CurrentBalance.objects.get_or_create(id=1)
 
-      
+        if myamount == 0:
+            messages.error(request, "Amount cannot be zero.")
+            return redirect(index)
+        
         if myamount < 0:
             expense_type = "DEBIT"
         else:
@@ -27,6 +31,7 @@ def index(request):
             mydata.income += myamount
         mydata.save()
 
+        
         return redirect(index)
 
     total_income = TrackingHistory.objects.filter(
