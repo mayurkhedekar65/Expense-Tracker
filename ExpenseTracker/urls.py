@@ -26,7 +26,11 @@ urlpatterns = [
     path('signup/', views.mysignup, name='signup'),
     path('login/', views.mylogin, name='login'),
     path('logout/', views.mylogout, name='logout'),
-    path("", include('tracker.urls')),
+    # root goes to signup, not tracker
+    path("", views.mysignup, name="signup"),
+
+    # tracker pages go under /tracker/
+    path("tracker/", include('tracker.urls')),
 ]
 
 if settings.DEBUG:
