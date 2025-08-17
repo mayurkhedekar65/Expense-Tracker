@@ -111,7 +111,7 @@ h1 {
   width: 100%;
   max-width: 200px;
   margin: 20px auto 0;
-  background: linear-gradient(135deg, #ff9696, #ff0000);
+  background: linear-gradient(135deg, #ff4d4d, #cc0000);
   color: white;
   padding: 12px 20px;
   border: none;
@@ -270,9 +270,11 @@ table button:hover {
   background: #fff;
   border: 1px solid #d9d9e3;
   border-radius: 8px;
-  padding: 12px;
+  padding: 12px 14px;   /* ✅ 12px top/bottom, 14px left/right */
   font-size: 14px;
+  box-sizing: border-box; /* ✅ ensures padding doesn’t overflow */
 }
+
 
 .signup-container .form-control input:focus {
   border-color: #4b00ff;
