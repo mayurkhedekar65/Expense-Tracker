@@ -1,0 +1,45 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login - Expense Tracker</title>
+  <link rel="stylesheet" href="{% static 'css/main.css' %}" />
+</head>
+<body>
+
+  <div class="signup-overlay">
+    <div class="signup-container">
+      <h2>Login</h2>
+
+      {% if messages %}
+        <ul class="messages">
+          {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+
+      <form method="POST" action="{% url 'login' %}">
+        {% csrf_token %}
+
+        <div class="form-control">
+          <label for="id_username">Username:</label>
+          <input id="id_username" type="text" name="username" placeholder="Enter your username" required />
+        </div>
+
+        <div class="form-control">
+          <label for="id_password">Password:</label>
+          <input id="id_password" type="password" name="password" placeholder="Enter your password" required />
+        </div>
+
+        <button type="submit" class="btn">Sign In</button>
+      </form>
+
+      <p class="auth-alt">Don't have an account? <a href="{% url 'signup' %}">Sign up</a></p>
+    </div>
+  </div>
+
+</body>
+</html>

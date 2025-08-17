@@ -1,5 +1,4 @@
 {% load static %}
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,34 +7,6 @@
   <title>Expense Tracker</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{% static 'css/main.css' %}">
-  <style>
-    /* Scroll styling for transaction history */
-    .transaction-history-container {
-      max-height: 300px; /* Limit height */
-      overflow-y: auto;  /* Enable vertical scroll */
-      border: 1px solid #ccc;
-      border-radius: 5px;
-    }
-
-    .transaction-history-container table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-
-    .transaction-history-container th,
-    .transaction-history-container td {
-      padding: 8px;
-      border-bottom: 1px solid #ddd;
-      text-align: left;
-    }
-
-    .transaction-history-container th {
-      background-color: #f4f4f4;
-      position: sticky;
-      top: 0; /* Keep header fixed while scrolling */
-      z-index: 1;
-    }
-  </style>
 </head>
 <body>
   <div class="container">
@@ -75,13 +46,16 @@
         <button class="btn" type="submit">Add Transaction</button>
       </form>
     </div>
+
+    <!-- Messages -->
     {% if messages %}
     <div>
-        {% for message in messages %}
-            <p style="color: red;">{{ message }}</p>
-        {% endfor %}
+      {% for message in messages %}
+        <p style="color: red;">{{ message }}</p>
+      {% endfor %}
     </div>
-{% endif %}
+    {% endif %}
+
     <!-- Transaction History -->
     <div class="history">
       <h3>Transaction History</h3>
@@ -117,6 +91,14 @@
             {% endfor %}
           </tbody>
         </table>
+      </div>
+
+      <!-- Logout Button -->
+      <div style="margin-top: 20px; text-align: center;">
+        <form method="POST" action="{% url 'logout' %}">
+          {% csrf_token %}
+          <button type="submit" class="logout-btn">Logout</button>
+        </form>
       </div>
     </div>
   </div>
