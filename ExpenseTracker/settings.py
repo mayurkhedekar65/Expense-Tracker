@@ -25,7 +25,8 @@ SECRET_KEY = 'django-insecure-#vrf97e7*#0#2piql%dr8i3l0s300w3v@rj-2_97km#ms8jnm8
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['mayurk646.pythonanywhere.com', '127.0.0.1', 'localhost']
+
 
 LOGIN_URL = '/signup/'
 # Application definition
